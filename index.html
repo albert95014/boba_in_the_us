@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<title>Boba in the United States</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="dataviz.js"></script>
+
+	<script>
+		// $(function() {
+		// 	$('#explore p').hover(function() {
+		// 		$('#explore').css('background-color', 'gray');
+		// 	}, function() {
+		// 		// on mouseout, reset the background colour
+		// 		$('#explore').css('background-color', '');
+		// 	});
+		// });
+
+		$(document).on('click', 'a[href^="#"]', function (event) {
+    event.preventDefault();
+
+    $('html, body').animate({
+        scrollTop: $($.attr(this, 'href')).offset().top
+    }, 400);
+});
+	</script>
+
+
+</head>
+<body>
+
+	<div class="section group">
+		<div class="col span_3_of_6">
+			<div id="maintitle">
+				<h1>Boba in the United States</h1>
+			</div>
+
+			<div id="intro">
+				<h2>What? &mdash;</h2>
+				<p>Boba milk tea, also known as “bubble tea” or “pearl milk tea” depending on who you ask, is a Taiwan-originated drink that consists of chewy tapioca balls and some sort of mixture involving milk, tea, and optional added flavors (through fresh ingredients or syrup).<sup>1</sup></p>
+
+				<h2>Why? &mdash;</h2>
+				<p>Over the past few decades, boba tea has become increasingly popular within the United States. This data visualization delves into how different “boba scenes” have developed in different areas around the country, and general insights into each city’s own boba business data.</p>
+
+				<h2>How was this data collected? &mdash;</h2>
+				<p>The businesses (in various cities) were collected via the Yelp Fusion API;<sup>2</sup> each business lists “Bubble Tea” as one of their categories. The cities (San Francisco, San Jose, Los Angeles, Philadelphia, Boston, Seattle, New York City, and Chicago) were taken from a list of most populous cities in the US, and also have more than 25 “bubble tea” business entries on Yelp.</p>
+			</div>
+
+			<div id="citations">
+				<p><sup>1</sup> http://en.wikipedia.org/wiki/Bubble_tea</p>
+				<p><sup>2</sup> https://www.yelp.com/developers/documentation/v3</p>
+			</div>
+		</div>
+		
+		<div class="col span_3_of_6">
+			<div id="explore">
+				<a href="#viz1">
+					<p>Explore Visualizations</p>
+					<p><i class="arrow down"></i></p>
+				</a>
+			</div>
+		</div>
+	</div>
+		
+
+	<div class="section group">
+		<div class="col span_4_of_6">
+			<a name="viz1"></a>
+			<div id="viz1">
+				
+				<h1>Number of Boba Establishments</h1>
+				<svg class="allCitiesViz" height="800" width="1200"> <!--svg canvas size-->
+				</svg>
+			</div>
+		</div>
+
+		<div class="col span_2_of_6">
+			<div class="notes">
+				<h3>Notes &mdash;</h3>
+				<p><b>Hover</b> to see the number of businesses in each city with the filtered rating.</p>
+
+				<h3>Insights &mdash;</h3>
+				<p>There are a total of <b>609</b> boba establishments among these 8 cities.</p>
+				<p><b>New York</b> has more twice the number of boba establishments than the city with the second-most (<b>San Jose</b>).</p>
+				<p>The most common Yelp rating for all cities is <b>4 stars</b>, except for San Francisco, whose most common rating is <b>3.5 stars</b>.</p>
+			</div>
+		</div>
+	</div>
+
+	
+	<div class="section group">
+		<div class="col span_4_of_6">
+			<div id="viz2">
+				<h1>Boba Establishments by City</h1>
+
+				<div class="custom-select">
+					<select id="citiesList">
+						<option value="'New York'">New York</option>
+						<option value="'San Jose'">San Jose</option>
+						<option value="'San Francisco'">San Francisco</option>
+						<option value="'Los Angeles'">Los Angeles</option>
+						<option value="'Boston'">Boston</option>
+						<option value="'Seattle'">Seattle</option>
+						<option value="'Philadelphia'">Philadelphia</option>
+						<option value="'Chicago'">Chicago</option>
+					</select>
+				</div>
+
+				<svg class="individualCitiesViz" height="800" width="1200"> <!--svg canvas size-->
+				</svg>
+			</div>
+		</div>
+
+		<div class="col span_2_of_6">
+			<div class="notes">
+				<h3>Notes &mdash;</h3>
+				<p>Filter the chart by selecting a city above.</p>
+				<p><b>Hover</b> to see the number of reviews each business has, or <b>click</b> on a circle to visit that business's Yelp page.</p>
+				<p>Businesses with more reviews are skewed towards the bottom of each category.</p>
+			</div>
+		</div>
+		
+	</div>
+
+
+</body>
+</html>
