@@ -74,6 +74,7 @@ sup {
 h1 {
 	font-size: 4.0rem;
 	font-weight: 500;
+	line-height: 4.0rem;
 }
 
 h2 {
@@ -185,8 +186,8 @@ i {
 }
 
 .notes p {
-	font-size: 1.8rem;
-	line-height: 2.2rem;
+	font-size: 1.6rem;
+	line-height: 2.0rem;
 }
 
 .notes > * {
