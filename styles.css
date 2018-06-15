@@ -58,6 +58,9 @@
 }
 
 
+
+
+
 body {
 	font-family: 'lunchtype22', sans-serif;
 	color: #4B4B4B;
@@ -100,6 +103,8 @@ a {
 b {
 	font-weight: 500;
 }
+
+
 
 #maintitle, #intro, #citations {
 	width: calc(100% - 120px);
@@ -247,4 +252,37 @@ svg {
 
 #citiesList select {
 	background: black;
+}
+
+
+@media only screen and (min-width: 1801px) {
+	#screencover, #screencover p {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1800px) {
+	#screencover {
+		background: #FEEED7;
+		z-index: 9999999;
+		position: fixed;
+			top: 0;
+			left: 0;
+		width: 100vw;
+		height: 100vh;
+	}
+
+	#screencover p {
+		display: block;
+		margin: 0 100px;
+		line-height: 2.0rem;
+		text-align: center;
+		position: relative;
+			top: 50%;
+		transform: translateY(-50%);
+	}
+
+	#screencover p a {
+		text-decoration: underline;
+	}
 }
