@@ -286,3 +286,13 @@ svg {
 		text-decoration: underline;
 	}
 }
+
+@media only screen and (max-width: 960px) {
+	#screencover p {
+		margin: 0 40px;
+	}
+
+
+}
+
+
