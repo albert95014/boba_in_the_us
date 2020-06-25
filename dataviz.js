@@ -173,6 +173,8 @@ $(document).ready(function() {
 
 	});
 
+
+
 var filteredData
 
 function individualCitiesViz (selectedCity) {
@@ -191,7 +193,7 @@ function individualCitiesViz (selectedCity) {
     	}
 
     	filterByCity(selectedCity);
-    	console.log(selectedCity);
+    	// console.log(selectedCity);
 
     	var bostonData = data.filter(function(d, i) { return d.businesses__location__city__cleaned == "Boston";});
     	var chicagoData = data.filter(function(d, i) { return d.businesses__location__city__cleaned == "Chicago";});
@@ -222,9 +224,38 @@ function individualCitiesViz (selectedCity) {
 			return a.key - b.key  ||  a.name.localeCompare(b.name);
 		});
 
+		var containedInRatings = function(ratings, r) {
+			found = false;
+			ratings.forEach(function(item, index) {
+				console.log(item['key'], r, Math.abs(item['key'] - r))
+				if ( Math.abs(item['key'] - r) < 0.1) {
+					found = item;
+				}
+			});
+			return found;
+		}
+
+		var completeRatings = function(ratings) {
+			newRatings = [];
+			['2.5', '3.0', '3.5', '4.0', '4.5', '5.0'].forEach(function(r, index) {
+				item = containedInRatings(ratings, r);
+				if ( ! item ) {
+					newRatings.push({
+						'key': r, 
+						'values': []
+					});
+				} else {
+					newRatings.push(item);
+				}
+			})
+			return newRatings;
+		}
+
+		ratingsByCity = completeRatings(ratingsByCity);
+
 		keys.sort(function(a, b){return a - b});
 
-		console.log(sanJoseData);
+		// console.log(sanJoseData);
 //removed, but may need for nesting attempt below
 		// var x = d3.scaleBand()
 		// 	    .rangeRound([0, width])
@@ -245,15 +276,18 @@ function individualCitiesViz (selectedCity) {
 		    y = d3.scaleLinear().rangeRound([height, 0]),
 		    z = d3.scaleOrdinal().range(["#FFD6CC", "#FFB6A5", "#FF967E", "#FF7656", "#FF562F", "#FF3608"]);
 
-		console.log(x.step());
-		console.log(x.bandwidth()/keys.length);
+		// console.log(x.step());
+		// console.log(x.bandwidth()/keys.length);
 		//step = width-40(40 being the total defined margins);
 
 		var bars = svg.append("g")
 		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 		  x.domain([">3-rating", "3.0-rating", "3.5-rating", "4.0-rating", "4.5-rating", "5.0-rating"]);
-		  y.domain([0, d3.max(ratingsByCity, function(d) { console.log(d.values.length); return d.values.length; })]);
+		  y.domain([0, d3.max(ratingsByCity, function(d) {
+		  	// console.log(d.values.length); 
+		  	return d.values.length; 
+		  })]);
 		  z.domain(keys);
 
 		  bars.append("g")
@@ -293,7 +327,9 @@ function individualCitiesViz (selectedCity) {
 				.attr("height", function(d) { return height - y(d.values.length); })
 				.attr("transform", function(d,i) { 
 					counter=0;
-					console.log(x.bandwidth());
+					// console.log('hello: ', x);
+					// console.log('bandwidth: ', x.bandwidth());
+					// console.log('d,i: ', d, i);
 					return "translate(" + (((x.bandwidth())*(i))+45) + "," + 10 + ")" //lmaoooo
 				})
 				// .style("fill", "lightblue");
@@ -322,7 +358,7 @@ function individualCitiesViz (selectedCity) {
 
 											if (i%4 == 0) { 
 												counter++;
-												console.log(keys.indexOf(new_brating));
+												// console.log(keys.indexOf(new_brating));
 												// console.log(counter);
 												return height-(35*counter);
 
@@ -335,7 +371,8 @@ function individualCitiesViz (selectedCity) {
 											if (new_brating < 3)
 												new_brating = 3;
 
-											console.log(z(d.businesses__rating)); return z(new_brating); })
+											// console.log(z(d.businesses__rating)); 
+											return z(new_brating); })
 			.on("mouseover", function() { tooltip.style("display", null); })
 			.on("mouseout", function() { tooltip.style("display", "none"); })
 			.on("mousemove", function(d) {
